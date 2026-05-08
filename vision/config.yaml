@@ -1,0 +1,110 @@
+camera:
+  width: 640
+  height: 480
+  fps: 30
+  use_depth: false
+
+stereo_camera:
+  width: 1280
+  height: 800
+  fps: 60
+  backend: "v4l2"
+  left_device_id: "/dev/video0"
+  right_device_id: "/dev/video2"
+  fx: 539.94
+  cx: 640.0
+  cy: 400.0
+  baseline_mm: 120.0
+
+stereo_depth:
+  num_disparities: 128
+  block_size: 7
+  uniqueness_ratio: 10
+  speckle_range: 32
+  speckle_window_size: 200
+  wls_lambda: 8000
+  wls_sigma: 1.5
+  fx: 539.94
+  baseline_mm: 120.0
+  depth_scale: 1.0
+
+# lidar:
+#   device: "/dev/ttyUSB0"
+#   baudrate: 115200
+#   max_distance: 12.0
+#   frame_id: "lidar_link"
+
+patch_scorer:
+  patch_size: 32
+  weights:
+    edge: 0.50
+    texture: 0.20
+    blob: 0.15
+    shadow: 0.15
+
+obstacle_detection:
+  model_path: "/home/thedarklord/drone_ws/src/px4_offboard/vision/yolo11n.pt"
+  imgsz: 320
+  conf: 0.4
+  obstacle_classes: [0, 2, 3, 5, 7]
+
+terrain:
+  model_path: "/home/thedarklord/drone_ws/src/px4_offboard/vision/terrain_cls_int8.tflite"
+  input_size: [128, 128]
+  safe_prob_threshold: 0.5
+  unsafe_terrains: ["marshy_terrain", "rocky_terrain"]
+  safety_voting_window: 5
+  terrain_confidence_frames: 3
+
+visualizer:
+  heatmap_alpha: 0.4
+  safe_zone_threshold_ratio: 0.97
+
+# optical_flow:
+#   pyr_scale: 0.5
+#   levels: 3
+#   winsize: 15
+#   iterations: 3
+#   poly_n: 5
+#   poly_sigma: 1.2
+#   mag_threshold: 2.0
+
+fsm:
+  search_altitude: 5.0
+  maneuver_altitude_increment: 2.0
+  commit_descent_speed: 0.3
+  approach_altitude: 3.0
+  lidar_safety_distance: 0.5
+  use_lidar_for_altitude: false
+  max_descent_attempts: 50
+  terrain_confidence_frames: 3
+  min_safe_zone_score: 0.3
+  max_maneuver_attempts: 5
+  hover_altitude: 5.0
+  rtl_altitude: 15.0
+
+# battery:
+#   voltage_min: 14.4
+#   voltage_low: 15.2
+#   voltage_critical: 14.0
+#   percentage_low: 25
+#   percentage_critical: 15
+#   smoothing_window: 10
+#   hover_on_low: true
+#   rtl_on_critical: true
+#   emergency_land_voltage: 13.8
+
+# health_monitor:
+#   heartbeat_timeout: 2.0
+#   max_vision_lag: 0.5
+#   max_depth_age: 1.0
+#   min_fps: 5.0
+
+terrain_map:
+  map_size_m: 20.0        # square map side length in metres
+  resolution: 0.1         # metres per cell → 200×200 grid
+  depth_scale: 0.001      # convert raw uint16 to metres (typical for RealSense/Gazebo)
+  flatness_threshold: 0.04 # depth std dev (m) below which a cell is considered flat
+  min_points: 5           # minimum depth hits before a cell is marked
+  cloud_max_points: 50000 # downsample accumulated cloud to this many points
+  publish_rate_hz: 2.0    # how often to publish occupancy grid + cloud
