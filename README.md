@@ -263,6 +263,12 @@ The Mars Gale Crater terrain mesh is included in `resource/models/`. It covers a
 - **Terrain map stitching** — the stitched map requires the drone camera to be pointing straight down. Any pitch/roll during the sweep causes triangular projection artefacts.
 
 ---
+ 
+## Real Drone Platform
+ 
+For details on the physical hardware platform, full bill of materials, component notes, and demo videos, see **[DRONE.md](DRONE.md)**.
+ 
+---
 
 ## License
 
