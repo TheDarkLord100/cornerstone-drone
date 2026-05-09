@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-
+import random
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
@@ -133,8 +133,8 @@ class SafeLand(Node):
         # ── Mission parameters ────────────────────────────────────────────────
         self.takeoff_alt   = -5.0
         self.scan_alt      = -3.0   # within depth sensor range (~3m max)
-        self.target_x      = 25.0
-        self.target_y      = -100.0
+        self.target_x      = random.uniform(-100.0, 100.0)
+        self.target_y      = random.uniform(-100.0, 100.0)
         self.target_yaw    = 0.0
         self.descent_speed = 0.5
         self.xy_radius     = 0.3
